@@ -529,24 +529,53 @@ frequencies.</p>
 <div id="data-cleaning-preprocessing" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> 3. Data Cleaning &amp;
 Preprocessing</h1>
-<p>Describe the steps you took to make the data usable, for example:</p>
+<p>Before conducting our analysis, the raw DC Metro Crime dataset was
+cleaned and preprocessed to make sure everything was accurate and
+consistent.</p>
+<p>Records with missing or not valid values in key variables, mainly
+shift (time of day) and offense, were removed from the dataset. These
+variables are required for answering the research question, so
+incomplete values could not be used.</p>
+<p>Several variables were converted to appropriate data types:</p>
 <ul>
-<li>Handling missing values (drop, impute, etc.).<br />
-</li>
-<li>Fixing types (dates, numeric vs. categorical).<br />
-</li>
-<li>Removing outliers (if done).<br />
-</li>
-<li>Creating new features (feature engineering).<br />
-</li>
-<li>Any scaling or encoding.</li>
+<li><p><strong>shift</strong> and <strong>offense</strong> were
+converted to categorical variables.</p></li>
+<li><p><strong>date</strong> and <strong>time-related fields</strong>
+were formatted into proper date types where needed. This made sure that
+grouping, filtering, and tests could be done correctly.</p></li>
 </ul>
-<pre class="r"><code># Example pseudo-code for cleaning:
-# data_clean &lt;- data |&gt;
-#   dplyr::filter(!is.na(target_variable)) |&gt;
-#   dplyr::mutate(
-#     new_feature = some_transformation(old_feature)
-#   )</code></pre>
+<p>No numerical outliers were removed because the analysis focuses on
+categorical variables of burglary incidents and not continuous numeric
+measurements. Every valid burglary report was kept to keep the validity
+of the crime distribution.</p>
+<p>The dataset was filtered to include only burglary offenses, since
+burglary is the main focus of the research question. This created a new
+working dataset we used for modeling and hypothesis testing.
+Additionally, the shift variable was used as the main grouping variable
+to compare burglary frequency across times of day.</p>
+<p>No numeric scaling was required because the analysis does not rely on
+continuous predictors.</p>
+<pre class="r"><code>library(tidyverse)
+
+#Need to keep only the variables we need
+dc_clean &lt;- dc_crime %&gt;%
+  select(OFFENSE,SHIFT, REPORT_DAT)
+
+#Need to remove missing values in the variables
+dc_clean &lt;- dc_clean %&gt;%
+  filter(!is.na(OFFENSE), !is.na(SHIFT))
+
+#Now we need to convert the data types
+dc_clean &lt;- dc_clean %&gt;%
+  mutate(
+    OFFENSE = as.factor(OFFENSE),
+    SHIFT = as.factor(SHIFT),
+    REPORT_DAT = as.Date(REPORT_DAT, format = &quot;%m/%d/%Y&quot;)
+  )
+
+#Now we filter for Burglary only
+dc_burglary &lt;- dc_clean %&gt;%
+  filter(OFFENSE == &quot;BURGLARY&quot;)</code></pre>
 </div>
 <div id="exploratory-data-analysis-eda" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> 4. Exploratory Data

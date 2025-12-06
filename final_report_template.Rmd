@@ -59,21 +59,46 @@ dc_crime <- bind_rows(dc_part1,dc_part2)
 
 # 3. Data Cleaning & Preprocessing
 
-Describe the steps you took to make the data usable, for example:
+Before conducting our analysis, the raw DC Metro Crime dataset was cleaned and preprocessed to make sure everything was accurate and consistent.
 
-- Handling missing values (drop, impute, etc.).  
-- Fixing types (dates, numeric vs. categorical).  
-- Removing outliers (if done).  
-- Creating new features (feature engineering).  
-- Any scaling or encoding.
+Records with missing or not valid values in key variables, mainly shift (time of day) and offense, were removed from the dataset. These variables are required for answering the research question, so incomplete values could not be used.
+
+Several variables were converted to appropriate data types:
+
+- **shift** and **offense** were converted to categorical variables.
+
+- **date** and **time-related fields** were formatted into proper date types where needed.
+This made sure that grouping, filtering, and tests could be done correctly.
+
+No numerical outliers were removed because the analysis focuses on categorical variables of burglary incidents and not continuous numeric measurements. Every valid burglary report was kept to keep the validity of the crime distribution.
+
+The dataset was filtered to include only burglary offenses, since burglary is the main focus of the research question. This created a new working dataset we used for modeling and hypothesis testing. Additionally, the shift variable was used as the main grouping variable to compare burglary frequency across times of day.
+
+No numeric scaling was required because the analysis does not rely on continuous predictors.
+
 
 ```{r cleaning, eval=FALSE}
-# Example pseudo-code for cleaning:
-# data_clean <- data |>
-#   dplyr::filter(!is.na(target_variable)) |>
-#   dplyr::mutate(
-#     new_feature = some_transformation(old_feature)
-#   )
+library(tidyverse)
+
+#Need to keep only the variables we need
+dc_clean <- dc_crime %>%
+  select(OFFENSE,SHIFT, REPORT_DAT)
+
+#Need to remove missing values in the variables
+dc_clean <- dc_clean %>%
+  filter(!is.na(OFFENSE), !is.na(SHIFT))
+
+#Now we need to convert the data types
+dc_clean <- dc_clean %>%
+  mutate(
+    OFFENSE = as.factor(OFFENSE),
+    SHIFT = as.factor(SHIFT),
+    REPORT_DAT = as.Date(REPORT_DAT, format = "%m/%d/%Y")
+  )
+
+#Now we filter for Burglary only
+dc_burglary <- dc_clean %>%
+  filter(OFFENSE == "BURGLARY")
 ```
 
 # 4. Exploratory Data Analysis (EDA)
