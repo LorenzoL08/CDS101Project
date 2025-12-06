@@ -3,7 +3,6 @@ title: "CDS 101 – Final Project Report"
 
 author: "Team 3: Athir, Lorenzo, Abel"
 
-author: "Group Name / Members"
 
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
@@ -20,32 +19,42 @@ output:
 
 # 1. Problem Definition
 
-<<<<<<< HEAD
+
 Burglary is a crime that is the cause of significant safety and financial concerns for residents of urban areas. Understanding when burglaries are most likely to occur can help our communities, law enforcement, and policymakers better understand and implement preventative measures. The Washington Dc area is a large and densely populated area, making it an important case study for examining certain crimes and patterns of those crimes. 
 
 The main research question for this project is: **Does the frequency of burglary incidents in the DC Metro area differ across different times of day?** The main objective of this project is to use historical crime data to examine how burglary occurrences vary by time of day and to test whether these differences are significant. We assume that reported burglary data accurately shows real crime patterns, and that the time of day classifications are recorded in a consistent way.
 
 To address this research question, we will first load and inspect the DC Metro Crime dataset. We will then clean the data by filtering for burglary offenses and handling missing values in the time of day variable. Next, we will do some exploratory data analysis using summaries and visualizations to examine how burglary frequency varies by shift. Finally, we will perform a formal hypothesis test to determine whether the observed differences across times of day are statistically significant, and interpret the results.
 
-=======
-- Clearly state the main problem or question you are investigating.  
-- Explain why it is interesting or important.  
-- Define the objective(s) of your analysis.  
-- Mention any key assumptions.
->>>>>>> c25410689d42c185141587df3b9feaaa8b98bf4b
 
 # 2. Data Acquisition & Description
 
-- Name and source of the dataset(s).  
-- How you obtained the data (download link, API, etc.).  
-- Brief description of the variables / features (with units if relevant).  
-- Approximate size (rows, columns).  
-- Any ethical, privacy, or bias considerations (if applicable).
+The dataset used for this project is the **DC Metro Crime Dataset**, obtained from Kaggle. It contains records of reported criminal incidents in the Washington, DC metro area.
+
+The dataset was obtained by downloading the CSV file from the Kaggle website and storing it locally in the project data folder for analysis.
+
+Key variables used in this project include:
+
+- **offense (categorical)**: the type of crime committed (for example, burglary).
+
+- **shift (categorical)**: the time of day the crime occurred, categorized as Day, Evening, or Midnight.
+
+The full dataset contains 342,864 observations and 32 variables. Due to GitHub file size limits, the dataset was split into two CSV files, dc_crime_part1.csv and dc_crime_part2.csv, which together is the complete dataset.
+
+
+This dataset is based on publicly released government crime reports, so it does not contain personal identifying information. However, we believe potential reporting bias may exist, as not all crimes are reported equally across neighborhoods or times. Additionally, policing practices and data collection methods may influence recorded crime frequencies.
+
+
 
 ```{r setup-data, echo=FALSE, message=FALSE, warning=FALSE}
-# Example: load a dataset (replace with your own)
-# library(readr)
-# data <- read_csv("data/your_data.csv")
+library(tidyverse)
+
+# We will load both parts of the dataset
+dc_part1 <- read.csv("data/dc_crime_part1.csv")
+dc_part2 <- read.csv("data/dc_crime_part2.csv")
+
+#combine
+dc_crime <- bind_rows(dc_part1,dc_part2)
 ```
 
 # 3. Data Cleaning & Preprocessing
