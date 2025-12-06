@@ -77,7 +77,7 @@ The dataset was filtered to include only burglary offenses, since burglary is th
 No numeric scaling was required because the analysis does not rely on continuous predictors.
 
 
-```{r cleaning, eval=FALSE}
+```{r cleaning}
 library(tidyverse)
 
 #Need to keep only the variables we need
@@ -103,23 +103,44 @@ dc_burglary <- dc_clean %>%
 
 # 4. Exploratory Data Analysis (EDA)
 
-This section maps directly to the **EDA** part of the rubric:
-
-- Summary statistics  
-- Visualizations  
-- Interpretation connected to the research question  
+This section presents descriptive statistics and visualizations of burglary incidents across different times of day. The goal is to explore whether burglary frequency varies by shift, which directly supports the project’s research question. 
 
 ```{r eda-summary, message=FALSE, warning=FALSE}
-# library(dplyr)
-# summary(data_clean)
+library(tidyverse)
+
+burglary_summary <- dc_burglary %>%
+  group_by(SHIFT) %>%
+  summarize(
+    Count = n(),
+    Percentage = round(100 * n() / nrow(dc_burglary), 1)
+  )
+
+burglary_summary  
 ```
 
-```{r eda-plot-example, message=FALSE, warning=FALSE, fig.cap="Example histogram of a numeric variable (EDA rubric)."}
-# library(ggplot2)
-# ggplot(data_clean, aes(x = some_numeric_variable)) +
-#   geom_histogram(binwidth = 5, color = "white") +
-#   labs(x = "Some Variable", y = "Count", title = "Distribution of Some Variable")
+### **Interpretation**
+
+The percentage column represents the share of total burglary incidents occurring in each shift. For example, the evening shift accounts for approximately 43.6% of all burglaries, followed by the day shift at 40% and the midnight shift at 16.4%.
+
+
+
+
+
+```{r eda-plot-example, message=FALSE, warning=FALSE, fig.cap="Histogram showing the distribution of burglary incidents over time in the DC Metro area"}
+fig.cap = "Histogram showing the distribution of burglary incidents over time in the DC Metro area"
+
+ggplot(dc_burglary, aes(x = REPORT_DAT)) +
+  geom_histogram(binwidth = 30) +
+  labs(
+    title = "Distribution of Burglary Incidents Over Time",
+    x = "Report Date",
+    y = "Number of Burglary Incidents"
+  )
 ```
+
+### **Interpretation**
+
+This histogram shows how reported burglary incidents are distributed over time. The overall spread of the distribution indicates that burglary occurs consistently throughout the study period, with some variation in frequency across years and months. This confirms that the dataset captures long-term burglary patterns rather than being concentrated in a short time window.
 
 # 5. Visualization Quality and Storytelling
 
