@@ -1,6 +1,10 @@
 ---
 title: "CDS 101 – Final Project Report"
+
 author: "Team 3: Athir, Lorenzo, Abel"
+
+author: "Group Name / Members"
+
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
   html_document:
@@ -16,12 +20,19 @@ output:
 
 # 1. Problem Definition
 
+<<<<<<< HEAD
 Burglary is a crime that is the cause of significant safety and financial concerns for residents of urban areas. Understanding when burglaries are most likely to occur can help our communities, law enforcement, and policymakers better understand and implement preventative measures. The Washington Dc area is a large and densely populated area, making it an important case study for examining certain crimes and patterns of those crimes. 
 
 The main research question for this project is: **Does the frequency of burglary incidents in the DC Metro area differ across different times of day?** The main objective of this project is to use historical crime data to examine how burglary occurrences vary by time of day and to test whether these differences are significant. We assume that reported burglary data accurately shows real crime patterns, and that the time of day classifications are recorded in a consistent way.
 
 To address this research question, we will first load and inspect the DC Metro Crime dataset. We will then clean the data by filtering for burglary offenses and handling missing values in the time of day variable. Next, we will do some exploratory data analysis using summaries and visualizations to examine how burglary frequency varies by shift. Finally, we will perform a formal hypothesis test to determine whether the observed differences across times of day are statistically significant, and interpret the results.
 
+=======
+- Clearly state the main problem or question you are investigating.  
+- Explain why it is interesting or important.  
+- Define the objective(s) of your analysis.  
+- Mention any key assumptions.
+>>>>>>> c25410689d42c185141587df3b9feaaa8b98bf4b
 
 # 2. Data Acquisition & Description
 
