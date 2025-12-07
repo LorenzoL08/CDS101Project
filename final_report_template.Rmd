@@ -160,27 +160,65 @@ Explain how you framed the problem and which models you chose:
 
 # 7. Model Implementation & Evaluation
 
-This corresponds to the **Model Implementation & Evaluation** rubric criterion.
+This section uses a chi-squared goodness-of-fit test to check whether burglary incidents are equally common across the three shifts (Day, Evening, Midnight).
 
-Describe:
+```{r modeling-summary, message=FALSE, warning=FALSE}
+# Table of burglary counts and percentages by shift
+library(tidyverse)
 
-- Features used.  
-- Data splitting strategy (train/test or cross-validation).  
-- Metrics used (accuracy, F1, RMSE, etc.).  
-- Tables/plots summarizing performance.  
-- A short interpretation of each metric/plot.
+burglary_shift_counts <- dc_burglary %>%
+  group_by(SHIFT) %>%
+  summarize(
+    Count = n(),
+    Percentage = round(100 * n() / nrow(dc_burglary), 1)
+  )
 
-```{r modeling, eval=FALSE}
-# Example structure:
-# set.seed(123)
-# train_index <- sample(seq_len(nrow(data_clean)), size = 0.8 * nrow(data_clean))
-# train <- data_clean[train_index, ]
-# test  <- data_clean[-train_index, ]
-#
-# model <- glm(target ~ ., data = train, family = binomial)
-# preds <- predict(model, newdata = test, type = "response")
-# # compute metrics...
+burglary_shift_counts
 ```
+### **Interpretation**
+This table shows how many burglaries occur in each shift and what percentage of the total they represent. Evening and Day have the highest shares; Midnight has the fewest burglaries.
+
+Chi-squared goodness-of-fit test for equal proportions across shifts
+
+```{r modeling-chisq, message=FALSE, warning=FALSE}
+burglary_shift_table <- table(dc_burglary$SHIFT)
+
+chisq_burglary_shift <- chisq.test(
+  x = burglary_shift_table,
+  p = c(1/3, 1/3, 1/3) # equal expected proportions
+)
+chisq_burglary_shift
+```
+
+### **Interpretation**
+The chi-squared test compares the observed counts to what we would see if burglaries were equally likely in each shift. The very small p-value (<< 0.05) means we reject equal proportions: burglary frequency depends on time of day.
+
+```{r modeling-plot, message=FALSE, warning=FALSE, fig.cap="Observed vs expected burglary counts by shift under an equal-proportions model"}
+observed_counts <- as.numeric(burglary_shift_table)
+expected_counts <- as.numeric(chisq_burglary_shift$expected)
+
+burglary_model_plot_data <- tibble(
+  SHIFT = names(burglary_shift_table),
+  Observed = observed_counts,
+  Expected = expected_counts
+) %>%
+  pivot_longer(
+    cols = c(Observed, Expected),
+    names_to = "Type",
+    values_to = "Count"
+  )
+
+ggplot(burglary_model_plot_data, aes(x = SHIFT, y = Count, fill = Type)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Observed vs Expected Burglary Counts by Shift",
+    x = "Shift",
+    y = "Number of Burglary Incidents",
+    fill = "Count Type"
+  )
+```
+### **Interpretation**
+The plot shows that Day and Evening have more burglaries than expected under equal proportions, while Midnight has fewer. This visually supports the chi-squared result.
 
 # 8. Conclusions & Recommendations
 
