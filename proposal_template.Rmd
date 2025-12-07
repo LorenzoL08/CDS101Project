@@ -1,6 +1,6 @@
 ---
 title: "CDS 101 – Final Project Proposal"
-author: "Group Name / Members"
+author: "Team 3: Athir, Lorenzo, Abel"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
   html_document:
@@ -14,36 +14,26 @@ output:
 
 ## 1. Dataset
 
-**Dataset Name:**  
-**Source / Platform (Kaggle, UCI, gov, etc.):**  
+**DC Metro Crime Data**  
+**Kaggle**  
 
 **Short Description:**  
-- What does this dataset contain?  
-- What are the main variables (features)?  
-- Approximate number of rows / columns?  
-- Why is this dataset interesting or relevant?
+
+This is a DC Metro Crime Dataset that contains records of crimes in the Washington DC Metropolitan area from December 31st, 2007, to November 2nd, 2017. This dataset provides an extremely rich source for analyzing crime patterns and determining key trends. This dataset is relevant to our purpose of identifying burglary patterns, as it includes a variety of variables like offense, shift, block, district, etc. For our project, we will use the two key variables, offense and shift, to determine the time of day burglaries have occurred. 
 
 ---
 
 ## 2. Dataset Link
 
-Paste a direct URL to the dataset (or documentation) here:
-
-`https://...`
+` https://www.kaggle.com/datasets/vinchinzu/dc-metro-crime-data`
 
 ---
 
 ## 3. Research Question
 
-Write 1–2 clear, specific, data-driven questions you want to answer.
 
-**Main research question:**
+> _Does the frequency of burglary incidents in the DC Metro area differ across different times of the day?_
 
-> _Type your main question here._
-
-**Optional secondary question(s):**
-
-> _List any additional questions here._
 
 ---
 
@@ -54,16 +44,18 @@ Describe what you plan to do analytically.
 - Type of task (check all that apply):
   - [ ] Exploratory analysis only  
   - [ ] Regression (predicting a numeric value)  
-  - [ ] Classification (predicting categories/labels)  
+  - [X] Classification (predicting categories/labels)  
   - [ ] Clustering / unsupervised patterns  
   - [ ] Other (describe)
 
 **Planned models / methods:**
 
-Examples:  
-- Linear regression, logistic regression  
-- Decision tree (if allowed), k-means  
-- Baseline model (e.g., majority class, mean predictor)
+Method: The method we decided to use after discussing with each other, is hypothesis testing. We will be specifically targeting burglary as the type of offense and the shifts (time of day) will be the other variable we will be measuring. 
+
+Null Hypothesis: There is no difference in the occurrence of burglary during any time of day (meaning there is no specific time of day where burglary is more common. 
+
+Alternative hypothesis: There is a difference in the occurrence of burglary during a time of day (meaning a specific time of day has more burglaries occurring than the other times of day. In this case, we believe that during the night, there will be the most amount of burglaries being committed.) 
+
 
 **Planned evaluation metrics:**
 
@@ -81,14 +73,8 @@ What do you expect to find? It’s okay if this changes later.
 - Bullet point 2  
 - Bullet point 3  
 
----
-
-## 6. Potential Challenges (Optional)
-
-- What might be difficult? (missing data, noisy labels, small sample size, etc.)  
-- How might you handle or mitigate these issues?
 
 ---
 
 **Submitted on:**  
-(Date)
+11-23-2025

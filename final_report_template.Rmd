@@ -15,8 +15,6 @@ output:
     toc: true
 ---
 
-> Replace this template text with your own writing, keeping the headings and overall structure aligned with the **CDS 101 project rubric**.
-
 # 1. Problem Definition
 
 
@@ -144,11 +142,50 @@ This histogram shows how reported burglary incidents are distributed over time. 
 
 # 5. Visualization Quality and Storytelling
 
-Use this section to satisfy the **Visualization Quality** rubric criterion:
+```{r}
+library(tidyverse)
 
-- Explain why your plot types are appropriate.  
-- Comment on labels, legends, colors, and overall readability.  
-- Mention any steps you took to make plots accessible and interpretable.
+dc_burglary %>%
+  ggplot() +
+    geom_bar(mapping = aes(x = SHIFT)) +
+    labs(
+    title = "Burglary Incidents by Shift",
+    x = "Time of Day (Shift)",
+    y = "Number of Burglary Incidents"
+  )
+```
+
+
+```{r}
+library(tidyverse)
+
+#Extracts year from report date in dc_burglary data set
+dc_burglary_year <- dc_burglary %>%
+  mutate(Year = year(REPORT_DAT))
+
+#Counts Burglaries by Shift and Year
+heatmap_burglary <- dc_burglary_year %>%
+  group_by(SHIFT, Year) %>%
+  summarise(Count = n())
+
+heatmap_burglary%>%
+  ggplot()+
+  geom_tile(mapping = aes(x = SHIFT, y = Year, fill = Count))+
+  scale_fill_gradient(low = "lightblue", high = "red")+
+  labs(
+    title = "Heatmap of Burglary Incidents by Shift",
+    x = "Time of Day (Shift)",
+    y = "Year"
+  )
+  
+```
+We used a bar graph to clearly show differences in time and the number of burglaries. Additionally, we also used a heat map plot for our analysis to help with storytelling and showcase the areas of density when it comes to the number of burglaries during a specific time in a specific year. This allows us to showcase the consistency in the number of burglaries during a time of day (Shift), as well as any potential inconsistencies. 
+
+These plots are appropriate because our analysis focuses on categorical variables. Since our focus is on the time of day burglaries occur the most.
+
+Both plots have clear titles and labeled axes. Our bar graph used the default colors so that all users can clearly see the difference in the number of burglaries and time without being distracted by extra details. Additionally, the heatmap utilized a legend to showcase the corresponding color with the count. For example, light blue represents a lower amount of burglaries, and red represents a higher amount of burglaries.
+
+Lastly, all graphs go from left to right in an ascending order, day -> evening -> midnight. Allowing readers to clearly visualize the amount of burglaries occurring based on time.
 
 # 6. Modeling Approach
 
@@ -209,6 +246,12 @@ List any references you used, such as:
 - Dataset documentation.  
 - Research papers or articles.  
 - Tutorials or blog posts.
+
+https://www.youtube.com/watch?v=gFs1VFviyPs&t=15
+https://www.geeksforgeeks.org/r-language/create-heatmap-in-r-using-ggplot2/
+https://chatgpt.com/share/693601d8-b3f0-8009-ad35-0e71d9c9034b
+https://stackoverflow.com/questions/60086041/how-do-i-use-r-to-count-multiple-variables
+
 
 # Appendix (Optional)
 
