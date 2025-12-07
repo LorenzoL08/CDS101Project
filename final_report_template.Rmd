@@ -189,11 +189,15 @@ Lastly, all graphs go from left to right in an ascending order, day -> evening -
 
 # 6. Modeling Approach
 
-Explain how you framed the problem and which models you chose:
+The modeling approach was designed to directly answer the research question: Does the frequency of burglary incidents in the DC Metro area differ across times of day?
 
-- Type of task (regression, classification, etc.).  
-- Baseline model or heuristic, if used.  
-- Main model(s) chosen and why they are appropriate.
+This task involves categorical data: we are not predicting burglary occurrences, but instead testing whether burglary counts differ by time of day across three categories (Day, Evening, Midnight). 
+
+Before running any model, we created a baseline. If burglary is not correlated to the time of day, then it should occur across all shifts equally. This forms our null hypothesis for our test and acts as our baseline model.
+
+The primary model we used is the chi-square test of independence, which is the most appropriate model because we are comparing categorical variables to test for association. We are using SHIFT, a categorical variable with three parts of the day, we are testing for count and comparing distribution, rather than making predictions. The chi-square test evaluates whether frequencies differ from expected ones.
+
+We decided not to use any other models as we are not trying to make any predictions. Using them in this context would not answer the research question as directly as the chi-square test. Overall, the chi-square test provides a clear way to evaluate and determine whether burglary incidents vary by shift. 
 
 # 7. Model Implementation & Evaluation
 
@@ -279,16 +283,17 @@ sessionInfo()
 
 # 10. References
 
-List any references you used, such as:
+References used:
 
 - Dataset documentation.  
 - Research papers or articles.  
 - Tutorials or blog posts.
 
-https://www.youtube.com/watch?v=gFs1VFviyPs&t=15
-https://www.geeksforgeeks.org/r-language/create-heatmap-in-r-using-ggplot2/
-https://chatgpt.com/share/693601d8-b3f0-8009-ad35-0e71d9c9034b
-https://stackoverflow.com/questions/60086041/how-do-i-use-r-to-count-multiple-variables
+- https://www.youtube.com/watch?v=gFs1VFviyPs&t=15
+- https://www.geeksforgeeks.org/r-language/create-heatmap-in-r-using-ggplot2/
+- https://chatgpt.com/share/693601d8-b3f0-8009-ad35-0e71d9c9034b
+- https://stackoverflow.com/questions/60086041/how-do-i-use-r-to-count-multiple-variables
+- https://www.geeksforgeeks.org/maths/chi-square-test/
 
 
 # Appendix (Optional)
