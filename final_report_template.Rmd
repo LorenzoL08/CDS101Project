@@ -5,6 +5,9 @@ author: "Team 3: Athir, Lorenzo, Abel"
 
 
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
+documentclass: article
+geometry: margin=1in
+fontsize: 11pt
 output:
   html_document:
     css: "gmu-cds101.css"
@@ -12,9 +15,43 @@ output:
     toc_depth: 3
     number_sections: true
   pdf_document:
-    toc: true
+    toc: false
+    df_print: kable
+    fig_caption: false
+    number_sections: false
+    dev: pdf
+    highlight: tango
 ---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(dplyr)
+library(rmarkdown)
+library(knitr)
 
+packages <- c(
+  "tidyverse",
+  "ggplot2",
+  "dplyr",
+  "readr",
+  "rmarkdown",
+  "knitr"
+)
+
+install_if_missing <- function(pkgs) {
+  for (p in pkgs) {
+    if (!requireNamespace(p, quietly = TRUE)) {
+      message(sprintf("Installing package: %s", p))
+      install.packages(p)
+    } else {
+      message(sprintf("Package already installed: %s", p))
+    }
+  }
+}
+
+install_if_missing(packages)
+```
 # 1. Problem Definition
 
 
@@ -45,7 +82,6 @@ This dataset is based on publicly released government crime reports, so it does 
 
 
 ```{r setup-data, echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse)
 
 # We will load both parts of the dataset
 dc_part1 <- read.csv("data/dc_crime_part1.csv")
@@ -53,6 +89,7 @@ dc_part2 <- read.csv("data/dc_crime_part2.csv")
 
 #combine
 dc_crime <- bind_rows(dc_part1,dc_part2)
+
 ```
 
 # 3. Data Cleaning & Preprocessing
@@ -76,8 +113,6 @@ No numeric scaling was required because the analysis does not rely on continuous
 
 
 ```{r cleaning}
-library(tidyverse)
-
 #Need to keep only the variables we need
 dc_clean <- dc_crime %>%
   select(OFFENSE,SHIFT, REPORT_DAT)
@@ -104,8 +139,6 @@ dc_burglary <- dc_clean %>%
 This section presents descriptive statistics and visualizations of burglary incidents across different times of day. The goal is to explore whether burglary frequency varies by shift, which directly supports the project’s research question. 
 
 ```{r eda-summary, message=FALSE, warning=FALSE}
-library(tidyverse)
-
 burglary_summary <- dc_burglary %>%
   group_by(SHIFT) %>%
   summarize(
@@ -143,8 +176,6 @@ This histogram shows how reported burglary incidents are distributed over time. 
 # 5. Visualization Quality and Storytelling
 
 ```{r}
-library(tidyverse)
-
 dc_burglary %>%
   ggplot() +
     geom_bar(mapping = aes(x = SHIFT)) +
@@ -157,8 +188,6 @@ dc_burglary %>%
 
 
 ```{r}
-library(tidyverse)
-
 #Extracts year from report date in dc_burglary data set
 dc_burglary_year <- dc_burglary %>%
   mutate(Year = year(REPORT_DAT))
@@ -205,8 +234,6 @@ This section uses a chi-squared goodness-of-fit test to check whether burglary i
 
 ```{r modeling-summary, message=FALSE, warning=FALSE}
 # Table of burglary counts and percentages by shift
-library(tidyverse)
-
 burglary_shift_counts <- dc_burglary %>%
   group_by(SHIFT) %>%
   summarize(
@@ -293,22 +320,22 @@ All of the analysis for this project is contained in a single R Markdown file (t
   - Produce all tables, plots, and the chi-squared test output shown in the report.
 We use consistent `dplyr` verbs for data cleaning and clear chunk labels (e.g., `setup-data`, `cleaning`, `eda-summary`, `modeling-summary`), which makes the workflow easy to follow. The R session information below documents the exact R version and package versions used, helping others reproduce the analysis.
 
-```{r session-info, echo=FALSE}
-sessionInfo()
+
 
 # 10. References
 
 References used:
 
-- Dataset documentation.  
-- Research papers or articles.  
-- Tutorials or blog posts.
+- WNCC Math and Stats. (2020, July 23). Graphs for Categorical Data. YouTube. https://www.youtube.com/watch?v=gFs1VFviyPs
 
-- https://www.youtube.com/watch?v=gFs1VFviyPs&t=15
-- https://www.geeksforgeeks.org/r-language/create-heatmap-in-r-using-ggplot2/
+- GeeksforGeeks. (2021, June 27). Create Heatmap in R Using ggplot2. GeeksforGeeks.
+https://www.geeksforgeeks.org/r-language/create-heatmap-in-r-using-ggplot2/
+
 - https://chatgpt.com/share/693601d8-b3f0-8009-ad35-0e71d9c9034b
-- https://stackoverflow.com/questions/60086041/how-do-i-use-r-to-count-multiple-variables
-- https://www.geeksforgeeks.org/maths/chi-square-test/
+
+- How do I use R to count multiple variables? (n.d.). Stack Overflow.  https://stackoverflow.com/questions/60086041/how-do-i-use-r-to-count-multiple-variables
+
+- GeeksforGeeks. (2024, May 3). ChiSquare Test. GeeksforGeeks. https://www.geeksforgeeks.org/maths/chi-square-test/
 -Kaggle. *DC Metro Police Crime Incidents*. Retrieved from Kaggle dataset description page (accessed 2024).  
 - Wickham, H., & Grolemund, G. (2017). *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*. O’Reilly Media. (Used for general guidance on data wrangling and visualization with `dplyr` and `ggplot2`.)
 - Diez, D. M., Barr, C. D., & Çetinkaya-Rundel, M. (2019). *OpenIntro Statistics* (4th ed.). OpenIntro. (Consulted for theory and interpretation of the chi-squared goodness-of-fit test.)
