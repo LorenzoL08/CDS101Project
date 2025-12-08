@@ -309,7 +309,11 @@ References used:
 - https://chatgpt.com/share/693601d8-b3f0-8009-ad35-0e71d9c9034b
 - https://stackoverflow.com/questions/60086041/how-do-i-use-r-to-count-multiple-variables
 - https://www.geeksforgeeks.org/maths/chi-square-test/
-
+-Kaggle. *DC Metro Police Crime Incidents*. Retrieved from Kaggle dataset description page (accessed 2024).  
+- Wickham, H., & Grolemund, G. (2017). *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data*. O’Reilly Media. (Used for general guidance on data wrangling and visualization with `dplyr` and `ggplot2`.)
+- Diez, D. M., Barr, C. D., & Çetinkaya-Rundel, M. (2019). *OpenIntro Statistics* (4th ed.). OpenIntro. (Consulted for theory and interpretation of the chi-squared goodness-of-fit test.)
+- R Core Team. (2024). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing, Vienna, Austria. Available at: https://www.R-project.org/  
+- Wickham, H. et al. (2019). *Welcome to the tidyverse*. Journal of Open Source Software, 4(43), 1686. (For the `tidyverse` collection of packages used in the analysis.)
 
 # Appendix (Optional)
 
