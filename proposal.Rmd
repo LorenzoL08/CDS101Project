@@ -44,9 +44,11 @@ Describe what you plan to do analytically.
 - Type of task (check all that apply):
   - [ ] Exploratory analysis only  
   - [ ] Regression (predicting a numeric value)  
-  - [X] Classification (predicting categories/labels)  
+  - [ ] Classification (predicting categories/labels)  
   - [ ] Clustering / unsupervised patterns  
-  - [ ] Other (describe)
+  - [X] Other (describe)
+  
+We plan to analyze two categorical variables to see if there is a difference in the amount of burglaries (OFFENSE) depending on the time of day (SHIFT).
 
 **Planned models / methods:**
 
@@ -59,19 +61,15 @@ Alternative hypothesis: There is a difference in the occurrence of burglary duri
 
 **Planned evaluation metrics:**
 
-Examples:  
-- Regression: RMSE, MAE, \(R^2\)  
-- Classification: accuracy, precision/recall, F1, confusion matrix  
+- Count of burglaries
+- Percentage of burglary during different shifts
 
 ---
 
 ## 5. Expected Results
 
-What do you expect to find? It’s okay if this changes later.
+We believe that we will see the most amount of burglary being committed in the DC metro area at night time. Our reasoning here is just common sense, it makes sense for burglaries to occur at night where most people are asleep or away and with visibility being very low during the night, this allows criminals to get away with much more compared to the daytime.
 
-- Bullet point 1 (e.g., “We expect feature X to be a strong predictor of Y.”)  
-- Bullet point 2  
-- Bullet point 3  
 
 
 ---
