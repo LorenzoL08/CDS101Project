@@ -263,23 +263,38 @@ The plot shows that Day and Evening have more burglaries than expected under equ
 
 # 8. Conclusions & Recommendations
 
-Summarize the key takeaways:
+Our main research question was:
 
-- Answer your original research question(s) directly.  
-- Highlight the most important patterns or relationships you found.  
-- Discuss limitations (data size, bias, missing variables, etc.).  
-- Suggest possible extensions or future work.
+Does the frequency of burglary incidents in the DC Metro area differ across different times of day (Day, Evening, Midnight)?
+
+Based on the burglary data and our chi-squared goodness-of-fit test, we conclude that **burglary incidents are not equally common across shifts**. The Evening and Day shifts have the highest proportions of burglaries, while the Midnight shift has the fewest. The chi-squared test returned a very small p-value (much less than 0.05), so we reject the hypothesis that burglaries are equally likely at all times of day.
+
+The most important pattern we found is that burglary risk is **concentrated during the Day and Evening**, rather than being spread evenly over 24 hours. This has practical implications: law enforcement and communities might focus more prevention, patrols, and awareness efforts during these higher-risk times.
+
+However, our analysis has several limitations. The dataset contains only **reported** burglaries, so underreporting or reporting bias may affect the results. We also did not include other potentially important variables such as neighborhood, day of week, season, or year. Finally, we treated the three broad shifts as our only measure of time; more detailed time-of-day information might reveal additional patterns.
+
+Future work could extend this project by:
+- Adding **spatial information** (e.g., neighborhoods) to see where and when burglaries are most common.
+- Using **finer time bins** (hourly or 2-hour blocks) instead of just three shifts.
+- Comparing burglary with other crime types (e.g., robbery, motor vehicle theft) to see if their time-of-day patterns are similar or different.
+- Examining **trends over years** to see whether the time-of-day pattern of burglaries is changing over time.
 
 # 9. Code Quality & Reproducibility
-
-Briefly document how someone else can reproduce your results:
-
-- Which R scripts or Rmd files to run.  
-- Any required R packages.  
+All of the analysis for this project is contained in a single R Markdown file (this final project `.Rmd`). To reproduce our results, someone can:
+- Open the project folder and load the `.Rmd` file in RStudio.  
+- Make sure the required packages are installed, mainly:
+  - `tidyverse`
+  - `ggplot2` (included in tidyverse)
+  - `knitr` and `rmarkdown` for knitting the report  
+- Place the two data files (`dc_crime_part1.csv` and `dc_crime_part2.csv`) in the `data/` folder as used in the code.  
+- Click **Knit** to generate the HTML or PDF report. This will automatically:
+  - Load and combine the crime data,
+  - Clean and filter it for burglary incidents,
+  - Produce all tables, plots, and the chi-squared test output shown in the report.
+We use consistent `dplyr` verbs for data cleaning and clear chunk labels (e.g., `setup-data`, `cleaning`, `eda-summary`, `modeling-summary`), which makes the workflow easy to follow. The R session information below documents the exact R version and package versions used, helping others reproduce the analysis.
 
 ```{r session-info, echo=FALSE}
 sessionInfo()
-```
 
 # 10. References
 
