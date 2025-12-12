@@ -219,7 +219,8 @@ The modeling approach was designed to directly answer the research question: Doe
 
 This task involves categorical data: we are not predicting burglary occurrences, but instead testing whether burglary counts differ by time of day across three categories (Day, Evening, Midnight). 
 
-Before running any model, we created a baseline. If burglary is not correlated to the time of day, then it should occur across all shifts equally. This forms our null hypothesis for our test and acts as our baseline model.
+Before running any model, we created a baseline. If burglary is not correlated to the time of day, then it should occur across all shifts equally. This forms our null hypothesis for our test and acts as our baseline model. We also formed an alternative hypothesis : The proportion of burglaries occurring during the Evening shift is significantly higher than what would be expected under a random, equal distribution.
+
 
 The primary model we used is the chi-square test of independence, which is the most appropriate model because we are comparing categorical variables to test for association. We are using SHIFT, a categorical variable with three parts of the day, we are testing for count and comparing distribution, rather than making predictions. The chi-square test evaluates whether frequencies differ from expected ones.
 
@@ -284,6 +285,42 @@ ggplot(burglary_model_plot_data, aes(x = SHIFT, y = Count, fill = Type)) +
 ```
 ### **Interpretation**
 The plot shows that Day and Evening have more burglaries than expected under equal proportions, while Midnight has fewer. This visually supports the chi-squared result.
+
+### Additional Hypothesis
+
+
+**Alternative Hypothesis (H₁₂):**  
+The proportion of burglaries occurring during the Evening shift is greater than what would be expected under an equal distribution across shifts.
+
+We evaluate this hypothesis using a simulation-based approach that compares the observed Evening burglary proportion to proportions generated under random assignment.
+
+```{r evening-simulation, message=FALSE, warning=FALSE}
+set.seed(123)
+
+# Total number of burglaries
+n_total <- nrow(dc_burglary)
+
+# Observed Evening burglary proportion
+observed_evening_prop <- mean(dc_burglary$SHIFT == "EVENING")
+
+# Simulate equal distribution across shifts
+simulated_evening_props <- replicate(10000, {
+  simulated_shift <- sample(
+    c("DAY", "EVENING", "MIDNIGHT"),
+    size = n_total,
+    replace = TRUE
+  )
+  mean(simulated_shift == "EVENING")
+})
+
+#p-value
+p_value_sim <- mean(simulated_evening_props >= observed_evening_prop)
+
+observed_evening_prop
+p_value_sim
+```
+### **Interpretation**
+The observed proportion of burglaries occurring during the Evening shift is approximately 43.6%, which is way higher than the 33.3% expected under an equal-distribution assumption. This results in an empirical p-value of approximately 0, providing extremely strong evidence that burglaries occur way more often during the Evening shift. This simulation-based result independently confirms the conclusion of the chi-squared test.
 
 # 8. Conclusions & Recommendations
 
