@@ -1,19 +1,11 @@
 ---
 title: "CDS 101 – Final Project Report"
-
 author: "Team 3: Athir, Lorenzo, Abel"
-
-
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 documentclass: article
 geometry: margin=1in
 fontsize: 11pt
 output:
-  html_document:
-    css: "gmu-cds101.css"
-    toc: true
-    toc_depth: 3
-    number_sections: true
   pdf_document:
     toc: false
     df_print: kable
@@ -21,6 +13,11 @@ output:
     number_sections: false
     dev: pdf
     highlight: tango
+  html_document:
+    css: "gmu-cds101.css"
+    toc: true
+    toc_depth: 3
+    number_sections: true
 ---
 ```{r setup, include=FALSE}
 library(tidyverse)
