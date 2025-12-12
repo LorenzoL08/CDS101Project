@@ -7,6 +7,7 @@ geometry: margin=1in
 fontsize: 11pt
 output:
   pdf_document:
+    latex_engine: xelatex
     toc: false
     df_print: kable
     fig_caption: false
